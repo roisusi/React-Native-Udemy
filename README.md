@@ -19,4 +19,7 @@ React Native - The Practical Guide By Maximilian Schwarzmüller
 <h2>Section 2: React Native Basics</h2>
 <ui>
   <li>Module and Components</li>
+  <li>Stying - you cant use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
+  <li>Layouts</li>
+
 </ui>
