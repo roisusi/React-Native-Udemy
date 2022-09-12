@@ -21,5 +21,6 @@ React Native - The Practical Guide By Maximilian Schwarzmüller
   <li>Module and Components</li>
   <li>Stying - you cant use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
   <li>Layouts</li>
+  <li>Flexbox - layout in React Native</li>
 
 </ui>
