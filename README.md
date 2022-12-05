@@ -19,8 +19,16 @@ React Native - The Practical Guide By Maximilian Schwarzmüller
 <h2>Section 2: React Native Basics</h2>
 <ui>
   <li>Module and Components</li>
-  <li>Stying - you cant use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
+  <li>Stying - you can use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
   <li>Layouts</li>
   <li>Flexbox - layout in React Native</li>
 
 </ui>
+
+<h4>Flex</h4>
+<ul>
+<li>flex</li>
+<li>flexDirection: "row" for --------- --------- --------- </li>
+<li>flexDirection: "col" for <br> --------- <br> --------- <br> --------- </li>
+<li>justifyContent - the behavior between the elementst (like space between them)</li>
+</ul>
