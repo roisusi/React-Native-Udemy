@@ -1,19 +1,27 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, TextInput, Text, View, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  Text,
+  View,
+  Button,
+  Alert,
+  ScrollView,
+} from "react-native";
 
 export default function App() {
-  const [goals, setGoals] = useState("No goals entered");
-  const onGoalType = (event) => {
-    setGoals(event);
-  };
+  const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
 
-  const onGoalPress = () => {
-    if (goals) {
-      Alert.alert(goals);
-    } else {
-      Alert.alert("No goals entered");
-    }
+  const goalInputHandler = (eventText) => {
+    setEnteredGoalText(eventText);
+  };
+  const addGoalHandler = () => {
+    setCourseGoals((currentCourseGoals) => [
+      ...currentCourseGoals,
+      enteredGoalText,
+    ]);
   };
 
   return (
@@ -22,12 +30,19 @@ export default function App() {
         <TextInput
           style={styles.textInput}
           placeholder="Your course goals !"
-          onChangeText={onGoalType}
+          onChangeText={goalInputHandler}
         />
-        <Button title="Add Goal" onPress={onGoalPress}></Button>
+        <Button title="Add Goal" onPress={addGoalHandler}></Button>
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        <ScrollView bounces={false}>
+          {courseGoals.map((goals) => (
+            // This is for iPhone that not supports radios on Text
+            <View key={Math.random(1)} style={styles.goalItem}>
+              <Text style={styles.goalTextItem}>{goals}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -56,4 +71,13 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   goalsContainer: { flex: 5 },
+  goalItem: {
+    margin: 8,
+    padding: 6,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+  goalTextItem: {
+    color: "white",
+  },
 });

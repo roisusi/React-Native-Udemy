@@ -22,13 +22,14 @@ React Native - The Practical Guide By Maximilian Schwarzmüller
   <li>Stying - you can use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
   <li>Layouts</li>
   <li>Flexbox - layout in React Native</li>
-
+  <li>Styles DO-NOT casscases</li>
 </ui>
 
 <h4>Flex</h4>
 <ul>
-<li>flex</li>
+<li>Every View on React Native uses Flexbox</li>
 <li>flexDirection: "row" for --------- --------- --------- </li>
 <li>flexDirection: "col" for <br> --------- <br> --------- <br> --------- </li>
 <li>justifyContent - the behavior between the elementst (like space between them)</li>
+<li>flex is applied for Main Axis distribute with other components</li>
 </ul>
