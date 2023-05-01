@@ -1,48 +1,63 @@
-import { StatusBar } from "expo-status-bar";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import { useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  Text,
-  View,
-  Button,
-  Alert,
-  ScrollView,
-} from "react-native";
+import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
-
-  const goalInputHandler = (eventText) => {
-    setEnteredGoalText(eventText);
+  const [modelIsVisible, setModelIsVisible] = useState(false);
+  const startAddGoalHandler = () => {
+    setModelIsVisible(true);
   };
-  const addGoalHandler = () => {
+
+  const endAddGoalHandler = () => {
+    setModelIsVisible(false);
+  };
+
+  const addGoalHandler = (enteredGoalText) => {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
-      enteredGoalText,
+      { text: enteredGoalText, id: Math.random().toString() },
     ]);
+    endAddGoalHandler();
+  };
+
+  const deleteGoalHandler = (goalId) => {
+    setCourseGoals((currentCourseGoals) =>
+      currentCourseGoals.filter((goal) => goal.id !== goalId)
+    );
   };
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goals !"
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler}></Button>
-      </View>
+      <Button
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
+      <GoalInput
+        visible={modelIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       <View style={styles.goalsContainer}>
-        <ScrollView bounces={false}>
-          {courseGoals.map((goals) => (
-            // This is for iPhone that not supports radios on Text
-            <View key={Math.random(1)} style={styles.goalItem}>
-              <Text style={styles.goalTextItem}>{goals}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        {/*for items to be rendered only when scrolling down*/}
+        <FlatList
+          data={courseGoals}
+          renderItem={(itemData) => {
+            return (
+              <GoalItem
+                itemData={itemData}
+                id={itemData.item.id}
+                onDeleteItem={deleteGoalHandler}
+              />
+            );
+          }}
+          keyExtractor={(item) => {
+            return item.id; //return the key for each item this is how i tell what is the key for each item in the list
+          }}
+          alwaysBounceVertical={false}
+        ></FlatList>
       </View>
     </View>
   );
@@ -54,30 +69,5 @@ const styles = StyleSheet.create({
     padding: 50,
     paddingHorizontal: 16,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%", //take 70% of the container
-    marginRight: 8,
-    padding: 8,
-  },
   goalsContainer: { flex: 5 },
-  goalItem: {
-    margin: 8,
-    padding: 6,
-    borderRadius: 6,
-    backgroundColor: "#5e0acc",
-  },
-  goalTextItem: {
-    color: "white",
-  },
 });
