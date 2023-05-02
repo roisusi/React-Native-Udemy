@@ -2,6 +2,7 @@ import { Button, FlatList, StyleSheet, View } from "react-native";
 import { useState } from "react";
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [courseGoals, setCourseGoals] = useState([]);
@@ -29,37 +30,40 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add New Goal"
-        color="#5e0acc"
-        onPress={startAddGoalHandler}
-      />
-      <GoalInput
-        visible={modelIsVisible}
-        onAddGoal={addGoalHandler}
-        onCancel={endAddGoalHandler}
-      />
-      <View style={styles.goalsContainer}>
-        {/*for items to be rendered only when scrolling down*/}
-        <FlatList
-          data={courseGoals}
-          renderItem={(itemData) => {
-            return (
-              <GoalItem
-                itemData={itemData}
-                id={itemData.item.id}
-                onDeleteItem={deleteGoalHandler}
-              />
-            );
-          }}
-          keyExtractor={(item) => {
-            return item.id; //return the key for each item this is how i tell what is the key for each item in the list
-          }}
-          alwaysBounceVertical={false}
-        ></FlatList>
+    <>
+      <StatusBar style={"light"} />
+      <View style={styles.appContainer}>
+        <Button
+          title="Add New Goal"
+          color="#a065ec"
+          onPress={startAddGoalHandler}
+        />
+        <GoalInput
+          visible={modelIsVisible}
+          onAddGoal={addGoalHandler}
+          onCancel={endAddGoalHandler}
+        />
+        <View style={styles.goalsContainer}>
+          {/*for items to be rendered only when scrolling down*/}
+          <FlatList
+            data={courseGoals}
+            renderItem={(itemData) => {
+              return (
+                <GoalItem
+                  itemData={itemData}
+                  id={itemData.item.id}
+                  onDeleteItem={deleteGoalHandler}
+                />
+              );
+            }}
+            keyExtractor={(item) => {
+              return item.id; //return the key for each item this is how i tell what is the key for each item in the list
+            }}
+            alwaysBounceVertical={false}
+          ></FlatList>
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
