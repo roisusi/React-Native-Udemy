@@ -8,19 +8,19 @@ import {
 } from "react-native";
 import { useState } from "react";
 
-function GoalInput(props) {
+function GoalInput({onAddGoal,visible,onCancel}) {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const goalInputHandler = (eventText) => {
     setEnteredGoalText(eventText);
   };
 
   const addGoalHandler = () => {
-    props.onAddGoal(enteredGoalText);
+    onAddGoal(enteredGoalText);
     setEnteredGoalText("");
   };
 
   return (
-    <Modal visible={props.visible} animationType="slide">
+    <Modal visible={visible} animationType="slide">
       <View style={styles.inputContainer}>
         <Image
           style={styles.image}
@@ -43,7 +43,7 @@ function GoalInput(props) {
           <View style={styles.button}>
             <Button
               title="Cancel"
-              onPress={props.onCancel}
+              onPress={onCancel}
               color={"#f31282"}
             ></Button>
           </View>
