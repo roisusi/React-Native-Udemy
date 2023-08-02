@@ -16,14 +16,6 @@ React Native - The Practical Guide By Maximilian Schwarzmüller
   <li>npm i -g expo-cli</li>
   <li>expo init "DIR"</li>
 </ui>
-<h2>Section 2: React Native Basics</h2>
-<ui>
-  <li>Module and Components</li>
-  <li>Stying - you can use CSS 1. inline Style {{}} 2. StyleSheet Objects</li>
-  <li>Layouts</li>
-  <li>Flexbox - layout in React Native</li>
-  <li>Styles DO-NOT casscases</li>
-</ui>
 
 <h4>Flex</h4>
 <ul>

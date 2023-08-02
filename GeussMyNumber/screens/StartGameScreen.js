@@ -1,80 +1,83 @@
-import { Alert, StyleSheet, TextInput, View } from "react-native";
-import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
-import Colors from "../constants/colors";
+import { Alert, StyleSheet, TextInput, View } from "react-native";
 
-export default function StartGameScreen({ onPickNumber }) {
+import PrimaryButton from "../components/ui/PrimaryButton";
+import Colors from "../constants/colors";
+import Title from "../components/ui/Title";
+
+function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState("");
 
-  function handleNumberInput(enteredText) {
+  function numberInputHandler(enteredText) {
     setEnteredNumber(enteredText);
   }
 
-  function handleResetButton() {
+  function resetInputHandler() {
     setEnteredNumber("");
   }
 
-  function handleConfirmedButton() {
-    if (
-      isNaN(Number(enteredNumber)) ||
-      Number(enteredNumber) > 100 ||
-      Number(enteredNumber) <= 0
-    ) {
-      Alert.alert("Invalid Number", "Please enter a number between 1 and 99", [
-        {
-          text: "Okay",
-          style: "destructive",
-          onPress: handleResetButton,
-        },
-      ]);
-    } else {
-      onPickNumber(enteredNumber);
+  function confirmInputHandler() {
+    const chosenNumber = parseInt(enteredNumber);
+
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        "Invalid number!",
+        "Number has to be a number between 1 and 99.",
+        [{ text: "Okay", style: "destructive", onPress: resetInputHandler }]
+      );
+      return;
     }
+
+    onPickNumber(chosenNumber);
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType={"number-pad"}
-        autoCapitalize={"none"}
-        value={enteredNumber}
-        onChangeText={handleNumberInput}
-      />
-      <View style={styles.buttonsContainer}>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onButtonClick={handleResetButton}>Reset</PrimaryButton>
-        </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onButtonClick={handleConfirmedButton}>
-            Confirm
-          </PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+          </View>
         </View>
       </View>
     </View>
   );
 }
 
+export default StartGameScreen;
+
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    marginTop: 100,
+    alignItems: "center",
+  },
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: 36,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: Colors.primary800, //will trigger a warning type ABI48_0_0RCTView has a shadow...
+    backgroundColor: Colors.primary800,
     borderRadius: 8,
-    elevation: 4, //Shadow on android devices
-    //Shadow on ios devices
+    elevation: 4,
     shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
-    //Shadow on ios devices
+    shadowOpacity: 0.25,
   },
   numberInput: {
     height: 50,
